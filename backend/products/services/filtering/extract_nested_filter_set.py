@@ -4,8 +4,8 @@ from products.services.filtering.product_filter import ProductFilter
 
 
 class ExtractNestedFilterSet:
-    def __init__(self, selected_filters, base_products, base_filter_set):
-        self.selected_filters = selected_filters
+    def __init__(self, filter_params, base_products, base_filter_set):
+        self.filter_params = filter_params
         self.base_products = base_products
         self.base_filter_set = base_filter_set
 
@@ -16,7 +16,7 @@ class ExtractNestedFilterSet:
 
         for attribute_slug in all_base_filter_set_attributes_slugs:
             filtered_products = ProductFilter(
-                selected_filters=self.selected_filters,
+                filter_params=self.filter_params,
                 products=self.base_products,
                 skip_value=attribute_slug,
             ).execute()
