@@ -7,6 +7,13 @@ from products.services.filtering.filter_set_item import FilterSetItemBuilder
 class FilterSet:
     items: list
 
+    def sort_items(self):
+        self.items = sorted(self.items, key=lambda item: item.position)
+
+    def sort_items_values(self):
+        for item in self.items:
+            item.values = sorted(item.values, key=lambda value: value.name)
+
     def get_items_slugs(self):
         slugs = set()
 
@@ -50,7 +57,5 @@ class FilterSetBuilder:
         for product_attribute_slug, product_attribute_values_slugs in self.products_attributes_and_values.items():
             filter_set_item = FilterSetItemBuilder(product_attribute_slug, product_attribute_values_slugs).execute()
             filter_set_items.append(filter_set_item)
-
-        filter_set_items = sorted(filter_set_items, key=lambda item: item.name)
 
         return FilterSet(items=filter_set_items)

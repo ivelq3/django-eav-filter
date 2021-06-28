@@ -37,6 +37,8 @@ class CategoryDetailViewPresenter:
         ).execute()
 
         base_products_filter_set.disable_not_possible_filter_options(other_filter_set=filtered_products_filter_set)
+        base_products_filter_set.sort_items()
+        base_products_filter_set.sort_items_values()
         filter_set_serializer = FilterSetSerializer(base_products_filter_set)
         return filter_set_serializer.data
 
