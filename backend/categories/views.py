@@ -1,10 +1,9 @@
-from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from rest_framework.response import Response
 
 from categories.models import Category
-from categories.presenters.category_detail_view import CategoryDetailViewPresenter
 from categories.serializers import CategorySerializer
+from categories.presenters.category_detail_view import CategoryDetailViewPresenter
 
 
 class CategoryDetailView(APIView):
@@ -13,10 +12,16 @@ class CategoryDetailView(APIView):
 
         return Response(
             {
+                "perPage": obj.per_page(),
                 "products": obj.products(),
+                "minPrice": obj.min_price(),
+                "maxPrice": obj.max_price(),
                 "filterSet": obj.filter_set(),
                 "categoryName": obj.category_name(),
+                "productsCount": obj.products_count(),
                 "selectedFilters": obj.selected_filters(),
+                "selectedOrderBy": obj.selected_order_by(),
+                "selectedMinAndMaxPrice": obj.selected_min_and_max_price(),
             }
         )
 

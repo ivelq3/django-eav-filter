@@ -4,21 +4,25 @@ from products.services.filtering.product_filter import ProductFilter
 
 
 class ExtractNestedFilterSet:
-    def __init__(self, filter_params, base_products, base_filter_set):
+    def __init__(self, filter_params, category_products, category_filter_set, min_price, max_price):
+        self.min_price = min_price
+        self.max_price = max_price
         self.filter_params = filter_params
-        self.base_products = base_products
-        self.base_filter_set = base_filter_set
+        self.category_products = category_products
+        self.category_filter_set = category_filter_set
 
     def execute(self):
         filter_set_items = []
 
-        all_base_filter_set_attributes_slugs = self.base_filter_set.get_items_slugs()
+        all_category_filter_set_attributes_slugs = self.category_filter_set.get_items_slugs()
 
-        for attribute_slug in all_base_filter_set_attributes_slugs:
+        for attribute_slug in all_category_filter_set_attributes_slugs:
             filtered_products = ProductFilter(
                 filter_params=self.filter_params,
-                products=self.base_products,
+                products=self.category_products,
                 skip_value=attribute_slug,
+                min_price=self.min_price,
+                max_price=self.max_price,
             ).execute()
             # can return None if attribute slug not in filtered products
             # TODO make test

@@ -11,19 +11,16 @@ div
             :key="category.id",
             :to="{ name: 'categories-slug', params: { slug: category.slug } }"
           ) {{ category.name }}
-
       b-navbar-nav.ml-auto
         b-nav-form
           b-form-input.rounded-0(placeholder="Название товара")
           b-button(variant="primary", squared) Поиск
 </template>
-
 <script>
 export default {
   async fetch() {
     this.categories = await this.$axios.$get("/categories/");
   },
-
   data() {
     return {
       categories: {},
