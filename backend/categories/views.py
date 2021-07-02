@@ -8,6 +8,7 @@ from categories.presenters.category_detail_view import CategoryDetailViewPresent
 
 class CategoryDetailView(APIView):
     def get(self, request, slug):
+
         obj = CategoryDetailViewPresenter(request=request, category_slug=slug)
 
         return Response(

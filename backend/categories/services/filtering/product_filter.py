@@ -20,6 +20,6 @@ class ProductFilter:
 
         for search_key, search_values_list in self.filter_params.items():
             if search_key != self.skip_value:
-                self.products = self.products.filter(eavs__values__slug__in=search_values_list)
+                self.products = self.products.filter(eavs__values__slug__in=search_values_list).distinct()
 
-        return self.products.distinct()
+        return self.products

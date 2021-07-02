@@ -3,22 +3,6 @@ from rest_framework import serializers
 from products.models import Eav, Product, ProductAttribute, ProductAttributeValue
 
 
-class FilterSetItemValueSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=200)
-    slug = serializers.CharField(max_length=200)
-    disabled = serializers.BooleanField(default=False)
-
-
-class FilterSetItemSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=200)
-    slug = serializers.CharField(max_length=200)
-    values = FilterSetItemValueSerializer(many=True)
-
-
-class FilterSetSerializer(serializers.Serializer):
-    items = FilterSetItemSerializer(many=True)
-
-
 class ProductAttributeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductAttribute

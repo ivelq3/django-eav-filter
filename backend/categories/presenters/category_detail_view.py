@@ -1,10 +1,11 @@
 from categories.models import Category
 from django.core.paginator import Paginator
 from products.models import ProductAttribute
-from products.serializers import FilterSetSerializer, ProductSerializer
+from products.serializers import ProductSerializer
+from categories.serializers import FilterSetSerializer
+from categories.services.filtering.product_filter import ProductFilter
 from categories.services.filtering.extract_filter_set import ExtractFilterSet
 from categories.services.filtering.extract_nested_filter_set import ExtractNestedFilterSet
-from categories.services.filtering.product_filter import ProductFilter
 
 
 class CategoryDetailViewPresenter:
