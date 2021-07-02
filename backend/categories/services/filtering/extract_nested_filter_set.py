@@ -1,6 +1,6 @@
-from products.services.filtering.extract_filter_set import ExtractFilterSetItem
-from products.services.filtering.filter_set import FilterSet
-from products.services.filtering.product_filter import ProductFilter
+from categories.services.filtering.extract_filter_set import ExtractFilterSetItem
+from categories.services.filtering.filter_set import FilterSet
+from categories.services.filtering.product_filter import ProductFilter
 
 
 class ExtractNestedFilterSet:

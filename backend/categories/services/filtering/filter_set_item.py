@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from products.models import ProductAttribute
-from products.services.filtering.filter_set_item_value import FilterSetItemValueBuilder
+from categories.services.filtering.filter_set_item_value import FilterSetItemValueBuilder
 
 
 @dataclass

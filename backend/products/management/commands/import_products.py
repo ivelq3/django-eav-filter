@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from products.services.csv_import import start_import
+from categories.services.csv_import import start_import
 
 
 class Command(BaseCommand):

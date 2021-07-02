@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from products.services.filtering.filter_set_item import FilterSetItemBuilder
+from categories.services.filtering.filter_set_item import FilterSetItemBuilder
 
 
 @dataclass

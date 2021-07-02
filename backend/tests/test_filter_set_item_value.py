@@ -1,7 +1,7 @@
 import pytest
 from slugify import slugify
 from tests.factories import ProductAttributeValueFactory
-from products.services.filtering.filter_set_item_value import FilterSetItemValue, FilterSetItemValueBuilder
+from categories.services.filtering.filter_set_item_value import FilterSetItemValue, FilterSetItemValueBuilder
 
 
 @pytest.mark.django_db

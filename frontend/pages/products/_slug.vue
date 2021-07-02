@@ -15,9 +15,13 @@ div
 <script>
 const noImage = require("@/assets/noImage.png");
 export default {
-  async asyncData({ $axios, route }) {
-    const product = await $axios.$get(`/products/${route.params.slug}`);
-    return { product };
+  async asyncData({ $axios, route, error }) {
+    try {
+      const product = await $axios.$get(`/products/${route.params.slug}`);
+      return { product };
+    } catch {
+      error({ statusCode: 404 });
+    }
   },
   computed: {
     mainImage() {

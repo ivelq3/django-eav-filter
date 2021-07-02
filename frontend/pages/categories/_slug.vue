@@ -44,22 +44,26 @@ export default {
     ProductFilter,
     ProductListItem,
   },
-  async asyncData({ $axios, route }) {
-    const response = await $axios.$get(`/categories/${route.params.slug}`, {
-      params: route.query,
-    });
-    return {
-      perPage: response.perPage,
-      products: response.products,
-      minPrice: response.minPrice,
-      maxPrice: response.maxPrice,
-      filterSet: response.filterSet,
-      categoryName: response.categoryName,
-      productsCount: response.productsCount,
-      selectedFilters: response.selectedFilters,
-      selectedOrderBy: response.selectedOrderBy,
-      selectedMinAndMaxPrice: response.selectedMinAndMaxPrice,
-    };
+  async asyncData({ $axios, route, error }) {
+    try {
+      const response = await $axios.$get(`/categories/${route.params.slug}`, {
+        params: route.query,
+      });
+      return {
+        perPage: response.perPage,
+        products: response.products,
+        minPrice: response.minPrice,
+        maxPrice: response.maxPrice,
+        filterSet: response.filterSet,
+        categoryName: response.categoryName,
+        productsCount: response.productsCount,
+        selectedFilters: response.selectedFilters,
+        selectedOrderBy: response.selectedOrderBy,
+        selectedMinAndMaxPrice: response.selectedMinAndMaxPrice,
+      };
+    } catch {
+      error({ statusCode: 404 });
+    }
   },
   data() {
     return {
@@ -75,22 +79,26 @@ export default {
   },
   methods: {
     async loadData() {
-      const response = await this.$axios.$get(
-        `/categories/${this.$route.params.slug}`,
-        {
-          params: this.$route.query,
-        }
-      );
-      this.perPage = response.perPage;
-      this.products = response.products;
-      this.minPrice = response.minPrice;
-      this.maxPrice = response.maxPrice;
-      this.filterSet = response.filterSet;
-      this.categoryName = response.categoryName;
-      this.productsCount = response.productsCount;
-      this.selectedFilters = response.selectedFilters;
-      this.selectedOrderBy = response.selectedOrderBy;
-      this.selectedMinAndMaxPrice = response.selectedMinAndMaxPrice;
+      try {
+        const response = await this.$axios.$get(
+          `/categories/${this.$route.params.slug}`,
+          {
+            params: this.$route.query,
+          }
+        );
+        this.perPage = response.perPage;
+        this.products = response.products;
+        this.minPrice = response.minPrice;
+        this.maxPrice = response.maxPrice;
+        this.filterSet = response.filterSet;
+        this.categoryName = response.categoryName;
+        this.productsCount = response.productsCount;
+        this.selectedFilters = response.selectedFilters;
+        this.selectedOrderBy = response.selectedOrderBy;
+        this.selectedMinAndMaxPrice = response.selectedMinAndMaxPrice;
+      } catch {
+        return this.$nuxt.error({ statusCode: 404 });
+      }
     },
     paginate(currentPage) {
       const query = { ...this.$route.query, page: currentPage };
@@ -103,13 +111,3 @@ export default {
   },
 };
 </script>
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

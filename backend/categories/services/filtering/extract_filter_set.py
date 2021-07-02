@@ -1,6 +1,6 @@
-from products.services.filtering.extract_products_attributes_and_values import ExtractProductsAttributesAndValues
-from products.services.filtering.filter_set import FilterSetBuilder
-from products.services.filtering.filter_set_item import FilterSetItemBuilder
+from categories.services.filtering.extract_products_attributes_and_values import ExtractProductsAttributesAndValues
+from categories.services.filtering.filter_set import FilterSetBuilder
+from categories.services.filtering.filter_set_item import FilterSetItemBuilder
 
 
 class ExtractFilterSet:
