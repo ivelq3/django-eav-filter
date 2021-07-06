@@ -4,7 +4,6 @@ from tests.factories import ProductAttributeValueFactory
 from categories.services.filtering.filter_set_item_value import FilterSetItemValue, FilterSetItemValueBuilder
 
 
-@pytest.mark.django_db
 def test_filter_set_item_value_disable():
     value = FilterSetItemValue(name="white", slug="white")
     assert value.disabled == False

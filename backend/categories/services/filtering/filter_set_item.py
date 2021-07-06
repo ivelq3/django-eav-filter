@@ -28,4 +28,4 @@ class FilterSetItemBuilder:
     def execute(self):
         attribute_record = ProductAttribute.objects.get(slug=self.product_attribute_slug)
         filter_set_item_values = FilterSetItemValueBuilder(product_attribute_values_slugs=self.product_attribute_values_slugs).execute()
-        return FilterSetItem(name=attribute_record.name, slug=attribute_record.slug, values=filter_set_item_values)
+        return FilterSetItem(name=attribute_record.name.capitalize(), slug=attribute_record.slug, values=filter_set_item_values)
