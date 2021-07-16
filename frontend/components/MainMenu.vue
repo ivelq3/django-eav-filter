@@ -1,10 +1,11 @@
 <template lang="pug">
 div
-  b-button(v-b-toggle.sidebar-1, variant="primary") Каталог
-  b-sidebar#sidebar-1(title="Категории", shadow)
-    b-nav(small, tabs, vertical)
+  b-button(v-b-toggle.mainMenuSidebar, variant="primary") Каталог
+  b-sidebar#mainMenuSidebar(title="Категории", shadow)
+    b-nav(vertical)
       div(v-for="rootCategory of categories", :key="rootCategory.id")
-        b-nav-item(v-b-toggle="'root-' + rootCategory.id") {{ rootCategory.name }}
+        b-nav-item(v-b-toggle="'root-' + rootCategory.id")
+          span.cat.ml-2 {{ rootCategory.name }}
           BIconCaretRightFill.float-right(scale="0.6", variant="dark")
         b-collapse(:id="'root-' + rootCategory.id")
           div(
@@ -12,7 +13,9 @@ div
             :key="subCategory.id"
           )
             b-nav-item(v-b-toggle="'sub-' + subCategory.id")
-              b-link.ml-4(:to="{ name: 'categories-slug', params: { slug: subCategory.slug } }") {{ subCategory.name }}
+              span.cat.ml-4(
+                :to="{ name: 'categories-slug', params: { slug: subCategory.slug } }"
+              ) {{ subCategory.name }}
               BIconCaretRightFill.float-right(
                 v-if="subCategory.children",
                 scale="0.6",
@@ -24,7 +27,10 @@ div
                 :key="subSubCategory.id"
               )
                 b-nav-item
-                  b-link.ml-5(:to="{ name: 'categories-slug', params: { slug: subSubCategory.slug } }") {{ subSubCategory.name }}
+                  b-link.ml-5(
+                    :to="{ name: 'categories-slug', params: { slug: subSubCategory.slug } }"
+                  ) {{ subSubCategory.name }}
+        hr          
 </template>
 
 
@@ -46,3 +52,13 @@ export default {
   },
 };
 </script>
+
+<style>
+#mainMenuSidebar {
+  width: 430px;
+}
+
+.cat {
+  color: black;
+}
+</style>
