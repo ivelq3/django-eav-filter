@@ -16,9 +16,25 @@ class CsvImport:
         return product
 
     def create_category(self):
-        category_name = self.row.get("category")
-        category, _ = Category.objects.get_or_create(name=category_name)
-        return category
+        root_category = self.row.get("root_category")
+        sub_category = self.row.get("sub_category")
+        sub_sub_category = self.row.get("sub_sub_category")
+
+        if root_category:
+            root_category, _ = Category.objects.get_or_create(name=root_category)
+
+        if sub_category:
+            sub_category, _ = Category.objects.get_or_create(name=sub_category, parent=root_category)
+
+        if sub_sub_category:
+            sub_sub_category, _ = Category.objects.get_or_create(name=sub_sub_category, parent=sub_category)
+
+        if sub_sub_category:
+            return sub_sub_category
+        elif sub_category:
+            return sub_category
+        else:
+            return root_category
 
     def create_attribute(self, attribute_name):
         attribute, _ = ProductAttribute.objects.get_or_create(name=attribute_name)
@@ -35,11 +51,20 @@ class CsvImport:
         return eav
 
     def execute(self):
+        print(self.row)
         product = self.create_product()
         category = self.create_category()
         product.category = category
         for attribute_name, attribute_value_name in self.row.items():
-            if attribute_name != "product" and attribute_name != "price" and attribute_name != "category" and attribute_value_name != "":
+            if (
+                attribute_name != "sub_sub_category"
+                and attribute_name != "sub_category"
+                and attribute_name != "root_category"
+                and attribute_name != "product"
+                and attribute_name != "price"
+                and attribute_name != "category"
+                and attribute_value_name != ""
+            ):
                 attribute = self.create_attribute(attribute_name)
                 value = self.create_attribute_value(attribute_value_name)
                 eav = self.create_eav(attribute, value)

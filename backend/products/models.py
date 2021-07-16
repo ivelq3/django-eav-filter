@@ -1,6 +1,6 @@
 from django.db import models
 from slugify import slugify
-
+from mptt.models import TreeForeignKey
 from categories.models import Category
 
 
@@ -10,13 +10,7 @@ class Product(models.Model):
     price = models.PositiveSmallIntegerField()
     main_image = models.ImageField(upload_to="products/", blank=True)
     eavs = models.ManyToManyField("Eav")
-    category = models.ForeignKey(
-        Category,
-        null=True,
-        blank=True,
-        related_name="products",
-        on_delete=models.PROTECT,
-    )
+    category = TreeForeignKey(Category, null=True, blank=True, related_name="products", on_delete=models.PROTECT)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

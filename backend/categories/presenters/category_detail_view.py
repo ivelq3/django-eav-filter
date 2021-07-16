@@ -1,6 +1,6 @@
 from categories.models import Category
 from django.core.paginator import Paginator
-from products.models import ProductAttribute
+from products.models import Product, ProductAttribute
 from products.serializers import ProductSerializer
 from categories.serializers import FilterSetSerializer
 from categories.services.filtering.product_filter import ProductFilter
@@ -14,10 +14,11 @@ class CategoryDetailViewPresenter:
     ORDER_BY = "price"
 
     def __init__(self, request, category_slug):
+        
         self.request = request
         self.filter_params = self.__filter_params()
         self.category = Category.objects.get(slug=category_slug)
-        self.category_products = self.category.products.all()
+        self.category_products = Product.objects.filter(category__in=self.category.get_descendants(include_self=True))
         self.category_products_filter_set = self.__category_products_filter_set()
         self.filtered_products = self.__filtered_products()
         self.filtered_products_filter_set = self.__filtered_products_filter_set()
@@ -56,10 +57,15 @@ class CategoryDetailViewPresenter:
         if selected_min_price and selected_max_price:
             return [selected_min_price, selected_max_price]
 
-        else:
+        elif self.filtered_products:
             filtered_products_min_price = self.filtered_products.order_by("price").first().price
             filtered_products_max_price = self.filtered_products.order_by("price").last().price
             return [filtered_products_min_price, filtered_products_max_price]
+
+        else:
+            category_products_min_price = self.category_products.order_by("price").first().price
+            category_products_max_price = self.category_products.order_by("price").last().price
+            return [category_products_min_price, category_products_max_price]
 
     def selected_order_by(self):
         return self.request.query_params.get("order_by", self.ORDER_BY)

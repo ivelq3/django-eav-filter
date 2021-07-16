@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "categories",
     "products",
+    'mptt',
 ]
 
 MIDDLEWARE = [

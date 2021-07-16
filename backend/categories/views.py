@@ -29,6 +29,23 @@ class CategoryDetailView(APIView):
 
 class CategoryListView(APIView):
     def get(self, request):
-        categories = Category.objects.all()
-        category_serializer = CategorySerializer(categories, many=True)
-        return Response(category_serializer.data)
+        import json
+
+        tree = json.dumps(self.flat_tree_to_dict(Category.objects.all(), 3), ensure_ascii=False, indent=4).encode("utf8")
+        print(type(tree))
+        return Response(tree)
+
+    def flat_tree_to_dict(self, nodes, max_depth):
+        tree = []
+        last_levels = [None] * max_depth
+        for n in nodes:
+            d = {"id": n.id, "name": n.name, "slug": n.slug}
+            if n.level == 0:
+                tree.append(d)
+            else:
+                parent_dict = last_levels[n.level - 1]
+                if "children" not in parent_dict:
+                    parent_dict["children"] = []
+                parent_dict["children"].append(d)
+            last_levels[n.level] = d
+        return tree
