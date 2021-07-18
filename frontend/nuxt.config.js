@@ -33,7 +33,9 @@ export default {
   ],
 
   axios: {
-    baseURL: "http://localhost:8000/api"
+    baseURL: 'http://localhost:8000/api',
+    // baseURL: 'http://backend:8000/api',
+    // browserBaseURL: '/api',
   },
 
   build: {

@@ -1,0 +1,14 @@
+FROM node:16-alpine
+
+ARG AXIOS_BASEURL
+ARG AXIOS_BROWSER_BASEURL
+
+ENV APP_ROOT /frontend
+
+RUN mkdir ${APP_ROOT}
+WORKDIR ${APP_ROOT}
+ADD . ${APP_ROOT}
+
+RUN yarn install && yarn build
+
+ENV HOST 0.0.0.0

@@ -6,7 +6,6 @@ div
     b-collapse#nav-collapse(is-nav)
       b-navbar-nav
         MainMenu
-        //- TabMenu   
 
       b-navbar-nav.ml-auto
         b-nav-form
@@ -15,11 +14,9 @@ div
 </template>
 <script>
 import MainMenu from "@/components/MainMenu";
-import TabMenu from "@/components/TabMenu";
 export default {
   components: {
     MainMenu,
-    TabMenu,
   },
 };
 </script>

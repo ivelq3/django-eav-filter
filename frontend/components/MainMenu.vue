@@ -5,7 +5,7 @@ div
     b-nav(vertical)
       div(v-for="rootCategory of categories", :key="rootCategory.id")
         b-nav-item(v-b-toggle="'root-' + rootCategory.id")
-          span.cat.ml-2 {{ rootCategory.name }}
+          span {{ rootCategory.name }}
           BIconCaretRightFill.float-right(scale="0.6", variant="dark")
         b-collapse(:id="'root-' + rootCategory.id")
           div(
@@ -13,7 +13,7 @@ div
             :key="subCategory.id"
           )
             b-nav-item(v-b-toggle="'sub-' + subCategory.id")
-              span.cat.ml-4(
+              span(
                 :to="{ name: 'categories-slug', params: { slug: subCategory.slug } }"
               ) {{ subCategory.name }}
               BIconCaretRightFill.float-right(
@@ -27,10 +27,9 @@ div
                 :key="subSubCategory.id"
               )
                 b-nav-item
-                  b-link.ml-5(
+                  b-link(
                     :to="{ name: 'categories-slug', params: { slug: subSubCategory.slug } }"
                   ) {{ subSubCategory.name }}
-        hr          
 </template>
 
 
@@ -42,8 +41,7 @@ export default {
   },
   async fetch() {
     const response = await this.$axios.$get("/categories/");
-    const categories = JSON.parse(response);
-    this.categories = categories;
+    this.categories = JSON.parse(response);
   },
   data() {
     return {
@@ -52,13 +50,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#mainMenuSidebar {
-  width: 430px;
-}
-
-.cat {
-  color: black;
-}
-</style>
