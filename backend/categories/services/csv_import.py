@@ -73,10 +73,13 @@ class CsvImport:
 
 
 def start_import():
-    csv_file = open("test_data/wallpapers.csv", "r")
+    csv_file = open("test_data/data.csv", "r")
     reader = csv.DictReader(csv_file, delimiter=";")
 
     for row in reader:
-        CsvImport(row).execute()
+        try:
+            CsvImport(row).execute()
+        except:
+            pass
 
     csv_file.close()

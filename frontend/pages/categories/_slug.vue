@@ -1,10 +1,16 @@
 <template lang="pug">
 div
-  .row
-    .col-12
-      h1 Категория: {{ categoryName }}
-  .row
-    .col-2
+  a-row
+    a-col.pt-4
+      a-breadcrumb.pt-2(separator=">")
+        a-breadcrumb-item Главная
+        a-breadcrumb-item Каталог
+        a-breadcrumb-item {{ categoryName }}
+  a-row
+    a-col
+      h1 {{ categoryName }}
+  a-row(gutter=20)
+    a-col(span=4)
       ProductFilter(
         :filterSet="filterSet",
         :selectedFilters="selectedFilters",
@@ -12,29 +18,30 @@ div
         :maxPrice="maxPrice",
         :selectedMinAndMaxPrice="selectedMinAndMaxPrice"
       ) 
-    .col-10
-      .row
-        .col-12.d-flex.mb-3
-          b-form-select.w-25(
+    a-col(span=20)
+      a-row(type="flex", justify="space-between")
+        a-col
+          a-select(
             v-model="selectedOrderBy",
             :options="orderByOptions",
-            value-field="item",
-            text-field="name",
             @change="handleOrderBy"
+          ) 
+        a-col
+          a-pagination(
+            v-model="currentPage",
+            :defaultPageSize="perPage",
+            :total="productsCount",
+            @change="paginate"
           )
-          .overflow-auto.ml-auto
-            b-pagination(
-              v-model="currentPage",
-              :total-rows="productsCount",
-              :per-page="perPage",
-              @change="paginate"
-            )
 
-      .row.row-cols-5(v-if="products.length > 0")
-        .col.mb-4(v-for="product of products", :key="product.id")
+      a-row
+        a-col
+          .tags(v-for="tag of selectedFilters", :key="tag")
+            a-tag(closable, color="blue") {{ tag }}
+
+      a-row.product-list(type="flex", :gutter="[20, 20]")
+        a-col.ant-col-55(v-for="product of products", :key="product.id")
           ProductListItem(:product="product")
-      .row(v-else)
-        h1 Товаров в таком ценовом диапазоне не найденно
 </template>
 <script>
 import ProductFilter from "@/components/ProductFilter";
@@ -45,7 +52,6 @@ export default {
     ProductListItem,
   },
   async asyncData({ $axios, route, error }) {
-    
     const response = await $axios.$get(`/categories/${route.params.slug}`, {
       params: route.query,
     });
@@ -65,10 +71,11 @@ export default {
   },
   data() {
     return {
+      // array<{value, label, [disabled, key, title]}>
       currentPage: this.$route.query.page || 1,
       orderByOptions: [
-        { item: "price", name: "Сначала дешевые" },
-        { item: "-price", name: "Сначала дорогие" },
+        { value: "price", label: "Сначала дешевые" },
+        { value: "-price", label: "Сначала дорогие" },
       ],
     };
   },
@@ -105,3 +112,18 @@ export default {
   },
 };
 </script>
+
+<style>
+.product-list {
+  padding-top: 20px;
+}
+
+.tags {
+  display: inline-block;
+  padding-top: 20px;
+}
+
+.pt-2 {
+  padding-top: 20px;
+}
+</style>

@@ -1,0 +1,14 @@
+Django
+python-slugify
+djangorestframework
+django-cors-headers
+pytest
+pytest-django
+Pillow
+pytest-factoryboy
+pytest-cov
+Faker
+django-mptt
+black
+isort
+psycopg2-binary

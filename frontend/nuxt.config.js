@@ -15,10 +15,12 @@ export default {
   },
 
   css: [
-    '@/assets/css/main.css'
+    '@/assets/css/main.css',
+    'ant-design-vue/dist/antd.css'
   ],
 
   plugins: [
+    '@/plugins/antd-ui',
     '@/plugins/axios.js',
   ],
 
@@ -28,7 +30,6 @@ export default {
   ],
 
   modules: [
-    'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
   ],
 

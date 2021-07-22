@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      
+  backend:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend/:/usr/src/backend/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  
+  # frontend:
+  #   build: 
+  #     context: ./frontend
+  #   restart: always
+  #   container_name: frontend
+  #   expose:
+  #     - "3000"
+  #   depends_on:
+  #     - backend
+  #   command:
+  #     "yarn run dev"
+
+  # nginx:
+  #   image: nginx:1.15
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx:/etc/nginx/conf.d
+  #   depends_on:
+  #     - frontend
+
+volumes:
+  pgdata:

@@ -1,33 +1,27 @@
 <template lang="pug">
-div
-  b-button(
-    :to="{ name: 'categories-slug', params: { slug: this.$route.params.slug } }",
-    variant="primary",
-    squared,
-    block
-  ) Сбросить
-  .filter-group-name.pb-5 Цена
+.product-filter
+  n-link(:to="{ name: 'categories-slug', params: { slug: this.$route.params.slug } }")
+    a-button(block) Сбросить
+
+  .filter-group-name.price-range Цена
   vue-slider(
     :value="selectedMinAndMaxPrice",
-    :dotSize="19",
+    :dotSize="16",
     :contained="true",
     :tooltip="'always'",
-    :process-style="{ backgroundColor: '#007bff' }",
-    :tooltip-style="{ backgroundColor: '#007bff', borderColor: '#007bff' }",
+    :process-style="{ backgroundColor: '#1890ff' }",
+    :tooltip-style="{ backgroundColor: '#1890ff', borderColor: '#1890ff' }",
     :lazy="true",
     :min="minPrice",
     :max="maxPrice",
     @change="changePriceHandler"
   )
+
   div(v-for="(filterGroup, index) of filterSet.items", :key="index")
     .filter-group-name {{ filterGroup.name }}
-    b-form-checkbox-group(
-      :options="filterGroup.values",
+    a-checkbox-group(
       v-model="selectedFilters[filterGroup.slug]",
-      text-field="name",
-      value-field="slug",
-      disabled-field="disabled",
-      stacked,
+      :options="filterGroup.values",
       @change="changeFilterHandler"
     )
 </template>
@@ -68,10 +62,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .filter-group-name {
-  font-size: 16px;
+  font-weight: bold;
+  color: #282828;
+  font-size: 14px;
   padding: 10px 0px;
-  font-weight: bolder;
+}
+
+.ant-checkbox-group-item {
+  display: block;
+  margin-right: 0;
+}
+
+.price-range {
+  margin-bottom: 35px;
 }
 </style>

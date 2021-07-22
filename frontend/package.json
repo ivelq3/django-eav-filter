@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "1.0.0",
   "private": true,
-  
   "scripts": {
     "dev": "HOST=0.0.0.0 nuxt",
     "build": "nuxt build",
@@ -11,8 +10,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
-    "bootstrap": "^4.6.0",
-    "bootstrap-vue": "^2.21.2",
+    "ant-design-vue": "^1.7.6",
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3",
     "vue-slider-component": "^3.2.13"

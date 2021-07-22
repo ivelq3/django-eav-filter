@@ -10,9 +10,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class FilterSetItemValueSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=200)
-    slug = serializers.CharField(max_length=200)
-    disabled = serializers.BooleanField(default=False)
+    label = serializers.CharField(max_length=200, source='name')
+    value = serializers.CharField(max_length=200, source='slug')
+    disabled = serializers.BooleanField(default=False)    
+    # name = serializers.CharField(max_length=200)
+    # slug = serializers.CharField(max_length=200)
+    # disabled = serializers.BooleanField(default=False)
 
 
 class FilterSetItemSerializer(serializers.Serializer):

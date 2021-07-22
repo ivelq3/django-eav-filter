@@ -5,8 +5,13 @@ from categories.models import Category
 from categories.serializers import CategorySerializer
 from categories.presenters.category_detail_view import CategoryDetailViewPresenter
 
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
 
 class CategoryDetailView(APIView):
+
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, slug):
 
         obj = CategoryDetailViewPresenter(request=request, category_slug=slug)
@@ -32,7 +37,6 @@ class CategoryListView(APIView):
         import json
 
         tree = json.dumps(self.flat_tree_to_dict(Category.objects.all(), 3), ensure_ascii=False, indent=4).encode("utf8")
-        print(type(tree))
         return Response(tree)
 
     def flat_tree_to_dict(self, nodes, max_depth):
