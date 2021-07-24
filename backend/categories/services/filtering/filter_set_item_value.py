@@ -2,6 +2,8 @@ from dataclasses import dataclass
 
 from products.models import ProductAttributeValue
 
+# from django.core.cache import cache
+
 
 @dataclass
 class FilterSetItemValue:
@@ -19,6 +21,12 @@ class FilterSetItemValueBuilder:
 
     def execute(self):
         filter_set_item_values = []
+
+        # all_product_attribute_values = cache.get('all_product_attribute_values')
+        
+        # if all_product_attribute_values is None:
+        #     all_product_attribute_values = ProductAttributeValue.objects.all()
+        #     cache.set('all_product_attribute_values', all_product_attribute_values)
 
         for slug in self.product_attribute_values_slugs:
             value_record = ProductAttributeValue.objects.get(slug=slug)

@@ -1,4 +1,4 @@
-Django
+Django==3.1.1
 python-slugify
 djangorestframework
 django-cors-headers
@@ -12,3 +12,4 @@ django-mptt
 black
 isort
 psycopg2-binary
+django-silk

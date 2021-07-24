@@ -7,6 +7,7 @@ urlpatterns = [
     path("api/", include("products.urls")),
     path("api/", include("categories.urls")),
     path("admin/", admin.site.urls),
+    path("silk/", include('silk.urls', namespace='silk')),
 ]
 
 if settings.DEBUG:

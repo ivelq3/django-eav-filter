@@ -18,26 +18,26 @@ services:
     depends_on:
       - db
   
-  # frontend:
-  #   build: 
-  #     context: ./frontend
-  #   restart: always
-  #   container_name: frontend
-  #   expose:
-  #     - "3000"
-  #   depends_on:
-  #     - backend
-  #   command:
-  #     "yarn run dev"
+  frontend:
+    build: 
+      context: ./frontend
+    restart: always
+    container_name: frontend
+    expose:
+      - "3000"
+    depends_on:
+      - backend
+    command:
+      "yarn run dev"
 
-  # nginx:
-  #   image: nginx:1.15
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - ./nginx:/etc/nginx/conf.d
-  #   depends_on:
-  #     - frontend
+  nginx:
+    image: nginx:1.15
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - frontend
 
 volumes:
   pgdata:

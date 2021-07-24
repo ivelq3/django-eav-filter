@@ -2,16 +2,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from categories.models import Category
-from categories.serializers import CategorySerializer
+# from categories.serializers import CategorySerializer
 from categories.presenters.category_detail_view import CategoryDetailViewPresenter
 
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
+# from django.views.decorators.cache import cache_page
+# from django.utils.decorators import method_decorator
 
 
 class CategoryDetailView(APIView):
 
-    @method_decorator(cache_page(60*60*2))
+    # @method_decorator(cache_page(60*60*2))
     def get(self, request, slug):
 
         obj = CategoryDetailViewPresenter(request=request, category_slug=slug)
